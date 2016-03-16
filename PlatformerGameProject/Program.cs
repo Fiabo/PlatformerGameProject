@@ -18,33 +18,14 @@ namespace PlatformerGameProject
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+           
+                
+
         }
 
-        struct Leo
-        {
-            public RectangleF Leo;
+       
 
-            public Image LeoFace;
-
-            public float Yspeed;
-            public float rotation;
-        }
-
-        struct Oscar
-
-        {
-            public RectangleF TopOscar;
-            public RectangleF BottomOscar;
-
-            public float Xlocation;
-            public float Ylocation;
-            public float DistanceBetween;
-            
-        }
-
-        Image ImLeo = Properties.Resources.LeoImage;
-        Image ImOscarBottom = Properties.Resources.OscarImageBottom;
-        Image ImOscarTop = Properties.Resources.OscarImageTop;
+        
 
             
     }
