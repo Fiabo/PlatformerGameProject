@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,6 +20,27 @@ namespace PlatformerGameProject
             Application.Run(new Form1());
         }
 
+        struct Leo
+        {
+            public RectangleF Leo;
+
+            public Image LeoFace;
+
+            public float Yspeed;
+            public float rotation;
+        }
+
+        struct Oscar
+
+        {
+            public RectangleF TopOscar;
+            public RectangleF BottomOscar;
+
+            public float Xlocation;
+            public float Ylocation;
+            public float DistanceBetween;
+            
+        }
 
     }
 }
