@@ -43,7 +43,9 @@ namespace PlatformerGameProject
         }
 
         Image ImLeo = Properties.Resources.LeoImage;
-        Image ImOscar = Properties.Resources.OscarImage;
+        Image ImOscarBottom = Properties.Resources.OscarImageBottom;
+        Image ImOscarTop = Properties.Resources.OscarImageTop;
 
+            
     }
 }

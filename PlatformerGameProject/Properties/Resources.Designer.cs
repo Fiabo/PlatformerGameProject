@@ -73,9 +73,19 @@ namespace PlatformerGameProject.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap OscarImage {
+        internal static System.Drawing.Bitmap OscarImageBottom {
             get {
-                object obj = ResourceManager.GetObject("OscarImage", resourceCulture);
+                object obj = ResourceManager.GetObject("OscarImageBottom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap OscarImageTop {
+            get {
+                object obj = ResourceManager.GetObject("OscarImageTop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
