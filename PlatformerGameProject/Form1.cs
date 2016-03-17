@@ -12,22 +12,37 @@ namespace PlatformerGameProject
 {
     public partial class Form1 : Form
     {
+
+
+
         public Form1()
         {
+
             InitializeComponent();
         }
 
-        
-        
-         public void LeoCreating()
+        float leoWidth;
+        float leoHeight;
+        float OscarWidth;
+        float OscarHeight;
+
+        public void SizesInit(float leoWidth, float leoHeight, float OscarWidth, float OscarHeight)
         {
-           
-           float leoWidth = Width / 5;
-        float leoHeight = Width / 5;
-                Leo LeoCr = new Leo();
+             leoWidth = Width / 6;
+             leoHeight = Width / 6;
+             OscarWidth = Width / 10;
+             OscarHeight = Height / 3;
+        }
+
+        public void LeoCreating(float leoWidth, float leoHeight)
+        {
+          
+            
+             Leo LeoCr = new Leo();
                 LeoCr.LeoFace = ImLeo;
                 LeoCr.Yspeed = 0;
                 LeoCr.LeoSquare = new RectangleF(Width / 2 - leoWidth, Height / 2, leoWidth, leoHeight);
+            LeoCr.rotation = 0;
             }
 
         private Oscar OscarCreating()
@@ -37,7 +52,14 @@ namespace PlatformerGameProject
 
              Random rnd = new Random();
 
-             o.DistanceBetween = 4 * leoHeight;
+             o.DistanceBetween = leoHeight*5;
+            o.Xlocation = Width;
+            o.Ylocation = (rnd.Next((int)o.DistanceBetween) - o.DistanceBetween / 2) + Height / 2;
+            o.TopOscar = new RectangleF(o.Xlocation, o.Ylocation - o.DistanceBetween / 2 - OscarHeight, OscarWidth, OscarHeight);
+            o.BottomOscar = new RectangleF(o.Xlocation, o.Ylocation + o.DistanceBetween / 2, OscarWidth, OscarHeight);
+            return o;
+
+
 
          }
 
@@ -46,9 +68,13 @@ namespace PlatformerGameProject
          Image ImOscarBottom = Properties.Resources.OscarImageBottom;
          Image ImOscarTop = Properties.Resources.OscarImageTop;
 
+        
+
     }
-    
-   struct Leo
+
+
+
+    struct Leo
     {
         public RectangleF LeoSquare;
         
