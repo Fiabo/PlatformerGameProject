@@ -52,10 +52,11 @@ namespace PlatformerGameProject
             o.BottomOscar = new RectangleF(o.Xlocation, o.Ylocation + o.DistanceBetween / 2, OscarWidth, OscarHeight);
             return o;
 
-            
+            g.DrawImage(ImOscarBottom, o.BottomOscar);
+            g.DrawImage(ImOscarTop, o.TopOscar);
 
 
-         }
+        }
 
 
          Image ImLeo = Properties.Resources.LeoImage;
@@ -65,7 +66,8 @@ namespace PlatformerGameProject
          private void Form1_Click(object sender, EventArgs e)
          {
              g = CreateGraphics();
-             LeoCreating();            
+             LeoCreating();
+               
          }
 
       
