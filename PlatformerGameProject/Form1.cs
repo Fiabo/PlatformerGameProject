@@ -12,16 +12,12 @@ namespace PlatformerGameProject
 {
     public partial class Form1 : Form
     {
-
         
         Graphics g;
         
-        
-
         public Form1()
         {
-            InitializeComponent();
-            
+            InitializeComponent();           
         }
 
         
@@ -38,9 +34,8 @@ namespace PlatformerGameProject
             LeoCr.rotation = 0;
 
             g.Clear(Color.Aquamarine);
-            g.DrawImage(ImLeo, 0, 0, 50, 50);  //здесь изменил два последних. надо будет вернуть и посмотреть
+            g.DrawImage(ImLeo, 0, 0, LeoCr.leoWidth, LeoCr.leoHeight);  
             
-
             }
 
         private Oscar OscarCreating(float leoHeight, float OscarHeight, float OscarWidth)
