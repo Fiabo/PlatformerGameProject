@@ -12,12 +12,19 @@ namespace PlatformerGameProject
 {
     public partial class Form1 : Form
     {
-      
+
+        
         Graphics g;
+        
+        
+
         public Form1()
         {
-            InitializeComponent();          
+            InitializeComponent();
+            
         }
+
+        
 
         public void LeoCreating()
         {       
@@ -29,9 +36,10 @@ namespace PlatformerGameProject
 
                 LeoCr.LeoSquare = new RectangleF(Width / 2 - LeoCr.leoWidth, Height / 2, LeoCr.leoWidth, LeoCr.leoHeight);
             LeoCr.rotation = 0;
-           
+
+            g.Clear(Color.Aquamarine);
+            g.DrawImage(ImLeo, 0, 0, 50, 50);  //здесь изменил два последних. надо будет вернуть и посмотреть
             
-            g.DrawImage(ImLeo, 0, 0, LeoCr.leoWidth, LeoCr.leoHeight);
 
             }
 
@@ -58,6 +66,12 @@ namespace PlatformerGameProject
          Image ImLeo = Properties.Resources.LeoImage;
          Image ImOscarBottom = Properties.Resources.OscarImageBottom;
          Image ImOscarTop = Properties.Resources.OscarImageTop;
+
+         private void Form1_Click(object sender, EventArgs e)
+         {
+             g = CreateGraphics();
+             LeoCreating();            
+         }
 
       
        
