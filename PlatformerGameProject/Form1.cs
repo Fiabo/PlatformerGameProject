@@ -67,6 +67,7 @@ namespace PlatformerGameProject
          {
              g = CreateGraphics();
              LeoCreating();
+             OscarCreating(20, 50, 50);
                
          }
 
