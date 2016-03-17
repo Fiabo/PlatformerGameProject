@@ -15,6 +15,8 @@ namespace PlatformerGameProject
         
         Graphics g;
         
+
+        
         public Form1()
         {
             InitializeComponent();           
@@ -34,6 +36,7 @@ namespace PlatformerGameProject
             LeoCr.rotation = 0;
 
             g.Clear(Color.Aquamarine);
+            
             g.DrawImage(ImLeo, 0, 0, LeoCr.leoWidth, LeoCr.leoHeight);  
             
             }
@@ -66,6 +69,7 @@ namespace PlatformerGameProject
          private void Form1_Click(object sender, EventArgs e)
          {
              g = CreateGraphics();
+             g.Transform = new System.Drawing.Drawing2D.Matrix(1, 0, 0, 1, 30, 100);
              LeoCreating();
              OscarCreating(20, 50, 50);
                
