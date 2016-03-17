@@ -9,8 +9,8 @@ namespace PlatformerGameProject
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
+        /// <summary>.
+      
         /// </summary>
         [STAThread]
         static void Main()
@@ -18,9 +18,9 @@ namespace PlatformerGameProject
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
-           
-                
-
+            Form1 start = new Form1();
+            start.LeoCreating();
+            
         }
 
        

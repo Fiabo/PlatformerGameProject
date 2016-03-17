@@ -12,40 +12,30 @@ namespace PlatformerGameProject
 {
     public partial class Form1 : Form
     {
-
-
-
+      
+        Graphics g;
         public Form1()
         {
-
-            InitializeComponent();
+            InitializeComponent();          
         }
 
-        float leoWidth;
-        float leoHeight;
-        float OscarWidth;
-        float OscarHeight;
-
-        public void SizesInit(float leoWidth, float leoHeight, float OscarWidth, float OscarHeight)
-        {
-             leoWidth = Width / 6;
-             leoHeight = Width / 6;
-             OscarWidth = Width / 10;
-             OscarHeight = Height / 3;
-        }
-
-        public void LeoCreating(float leoWidth, float leoHeight)
-        {
-          
-            
+        public void LeoCreating()
+        {       
              Leo LeoCr = new Leo();
                 LeoCr.LeoFace = ImLeo;
                 LeoCr.Yspeed = 0;
-                LeoCr.LeoSquare = new RectangleF(Width / 2 - leoWidth, Height / 2, leoWidth, leoHeight);
+            LeoCr.leoWidth = Width / 6;
+            LeoCr.leoHeight = Width / 6;
+
+                LeoCr.LeoSquare = new RectangleF(Width / 2 - LeoCr.leoWidth, Height / 2, LeoCr.leoWidth, LeoCr.leoHeight);
             LeoCr.rotation = 0;
+           
+            
+            g.DrawImage(ImLeo, 0, 0, LeoCr.leoWidth, LeoCr.leoHeight);
+
             }
 
-        private Oscar OscarCreating()
+        private Oscar OscarCreating(float leoHeight, float OscarHeight, float OscarWidth)
          {
             
              Oscar o = new Oscar();
@@ -59,6 +49,7 @@ namespace PlatformerGameProject
             o.BottomOscar = new RectangleF(o.Xlocation, o.Ylocation + o.DistanceBetween / 2, OscarWidth, OscarHeight);
             return o;
 
+            
 
 
          }
@@ -68,16 +59,19 @@ namespace PlatformerGameProject
          Image ImOscarBottom = Properties.Resources.OscarImageBottom;
          Image ImOscarTop = Properties.Resources.OscarImageTop;
 
-        
+      
+       
 
     }
 
-
-
+    
+    
+    
     struct Leo
     {
         public RectangleF LeoSquare;
-        
+        public float leoWidth;
+        public float leoHeight;
         public Image LeoFace;
 
         public float Yspeed;
