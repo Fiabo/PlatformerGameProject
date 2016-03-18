@@ -12,21 +12,23 @@ namespace PlatformerGameProject
 {
     public partial class Form1 : Form
     {
-        
-        Graphics g;
-        
 
+        Leo LeoCr = new Leo();
+
+        Graphics g;
+
+        public const float SpeedUp = 5f;
         
         public Form1()
         {
-            InitializeComponent();           
+            InitializeComponent();
         }
 
         
 
         public void LeoCreating()
         {       
-             Leo LeoCr = new Leo();
+            
                 LeoCr.LeoFace = ImLeo;
                 LeoCr.Yspeed = 0;
             LeoCr.leoWidth = Width / 6;
@@ -35,9 +37,7 @@ namespace PlatformerGameProject
                 LeoCr.LeoSquare = new RectangleF(Width / 2 - LeoCr.leoWidth, Height / 2, LeoCr.leoWidth, LeoCr.leoHeight);
             LeoCr.rotation = 0;
 
-            g.Clear(Color.Aquamarine);
             
-            g.DrawImage(ImLeo, 0, 0, LeoCr.leoWidth, LeoCr.leoHeight);  
             
             }
 
@@ -53,12 +53,26 @@ namespace PlatformerGameProject
             o.Ylocation = (rnd.Next((int)o.DistanceBetween) - o.DistanceBetween / 2) + Height / 2;
             o.TopOscar = new RectangleF(o.Xlocation, o.Ylocation - o.DistanceBetween / 2 - OscarHeight, OscarWidth, OscarHeight);
             o.BottomOscar = new RectangleF(o.Xlocation, o.Ylocation + o.DistanceBetween / 2, OscarWidth, OscarHeight);
+
             return o;
 
-            g.DrawImage(ImOscarBottom, o.BottomOscar);
-            g.DrawImage(ImOscarTop, o.TopOscar);
+            
 
 
+        }
+
+        private void UpdateLeo()
+        {
+            LeoCr.Yspeed += SpeedUp;
+            LeoCr.LeoSquare.Location = new PointF(LeoCr.LeoSquare.Location.X, LeoCr.LeoSquare.Location.Y + LeoCr.Yspeed);
+        }
+
+        
+
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            
+            LeoCr.Yspeed -= 15;
         }
 
 
@@ -66,15 +80,46 @@ namespace PlatformerGameProject
          Image ImOscarBottom = Properties.Resources.OscarImageBottom;
          Image ImOscarTop = Properties.Resources.OscarImageTop;
 
-         private void Form1_Click(object sender, EventArgs e)
+         float t;
+        
+         private void timer1_Tick(object sender, EventArgs e)
          {
-             g = CreateGraphics();
-             g.Transform = new System.Drawing.Drawing2D.Matrix(1, 0, 0, 1, 30, 100);
-             LeoCreating();
-             OscarCreating(20, 50, 50);
-               
+             t += SpeedUp;
+             g.Clear(Color.Aquamarine);
+             g.DrawImage(ImLeo, 0, t, LeoCr.leoWidth, LeoCr.leoHeight);
          }
 
+         private void Form1_Shown(object sender, EventArgs e)
+         {
+             
+
+             g.Clear(Color.Aquamarine);
+
+             g.DrawImage(ImLeo, 0, 0, LeoCr.leoWidth, LeoCr.leoHeight);
+
+             Oscar o = OscarCreating(20, 50, 50);
+
+             g.DrawImage(ImOscarBottom, o.BottomOscar);
+             g.DrawImage(ImOscarTop, o.TopOscar);
+
+             timer1.Start();
+         }
+
+         private void Form1_Load(object sender, EventArgs e)
+         {
+             g = CreateGraphics();
+
+             LeoCreating();
+
+             g.Transform = new System.Drawing.Drawing2D.Matrix(1, 0, 0, 1, 120, 120);
+         }
+
+         private void Form1_Click(object sender, EventArgs e)
+         {
+             t -= 50;
+         }
+
+         
       
        
 
