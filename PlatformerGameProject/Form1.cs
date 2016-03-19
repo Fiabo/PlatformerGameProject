@@ -106,7 +106,7 @@ namespace PlatformerGameProject
              g.Transform = new System.Drawing.Drawing2D.Matrix(1, 0, 0, 1, 120, 120);
 
              LeoCreating();
-
+            pictureBox1.Image = Properties.Resources.bear;
              List<Oscar> oList = new List<Oscar>();
 
              //Oscar o = OscarCreating(20, 50, 50);
