@@ -17,9 +17,10 @@ namespace PlatformerGameProject
         Image ImOscarBottom = Properties.Resources.OscarImageBottom;
         Image ImOscarTop = Properties.Resources.OscarImageTop;
 
+
         Leo LeoCr = new Leo();
 
-        float maxLeoSpeed = -5;
+        float maxLeoSpeed = -8;
 
         Graphics g;
 
@@ -28,8 +29,22 @@ namespace PlatformerGameProject
         public Form1()
         {
             InitializeComponent();
+            BackgroundImage = Properties.Resources.mountains;
+            ImageAnimator.Animate(BackgroundImage, OnFrameChanged);
+            this.BackgroundImageLayout = ImageLayout.Stretch;
+         SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
         }       
 
+        private void OnFrameChanged(object sender, EventArgs e)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke((Action)(() => OnFrameChanged(sender, e)));
+                return;
+            }
+            ImageAnimator.UpdateFrames();
+            Invalidate(false);
+        }
         public void LeoCreating()
          {       
              LeoCr.LeoFace = ImLeo;
@@ -74,16 +89,14 @@ namespace PlatformerGameProject
                 LeoCr.Yspeed = maxLeoSpeed;
             }
         }
-
         float t;
-
          private void timer1_Tick(object sender, EventArgs e)
          {
              UpdateLeo();
              t += LeoCr.Yspeed;
+            // g.Clear(Color.Transparent);
+            g.DrawImage(ImLeo, 0, t, LeoCr.leoWidth, LeoCr.leoHeight);
 
-             g.Clear(Color.SkyBlue);
-             g.DrawImage(ImLeo, 0, t, LeoCr.leoWidth, LeoCr.leoHeight);
          }
 
          private void Form1_Load(object sender, EventArgs e)
@@ -92,7 +105,7 @@ namespace PlatformerGameProject
 
              g.Transform = new System.Drawing.Drawing2D.Matrix(1, 0, 0, 1, 120, 120);
 
-             LeoCreating();        
+             LeoCreating();
 
              List<Oscar> oList = new List<Oscar>();
 
