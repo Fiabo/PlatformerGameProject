@@ -19,7 +19,7 @@ namespace PlatformerGameProject
 
         Leo LeoCr = new Leo();
 
-        float maxLeoSpeed = -123;
+        float maxLeoSpeed = -5;
 
         Graphics g;
 
@@ -90,17 +90,21 @@ namespace PlatformerGameProject
          {
              g = CreateGraphics();
 
-             LeoCreating();
-
              g.Transform = new System.Drawing.Drawing2D.Matrix(1, 0, 0, 1, 120, 120);
 
-             Oscar o = OscarCreating(20, 50, 50);
+             LeoCreating();        
 
-             g.DrawImage(ImOscarBottom, o.BottomOscar);
-             g.DrawImage(ImOscarTop, o.TopOscar);
+             List<Oscar> oList = new List<Oscar>();
+
+             //Oscar o = OscarCreating(20, 50, 50);
+
+             //g.DrawImage(ImOscarBottom, o.BottomOscar);
+             //g.DrawImage(ImOscarTop, o.TopOscar);
 
              timer1.Start();
          }
+
+         
 
     }
 
