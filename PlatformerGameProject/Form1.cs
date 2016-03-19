@@ -21,6 +21,9 @@ namespace PlatformerGameProject
         Leo LeoCr = new Leo();
         Oscar o = new Oscar();
         float maxLeoSpeed = -8;
+        int sec = 0;
+        int maxTime = 228;
+        
 
         Graphics g;
 
@@ -103,8 +106,7 @@ namespace PlatformerGameProject
          private void timer1_Tick(object sender, EventArgs e)
          {
              UpdateLeo();
-             Oscar o = OscarCreating(20, 50, 50);
-             oList.Add(o);
+             
              UpdateOscar();
              t += LeoCr.Yspeed;
             // g.Clear(Color.Transparent);
@@ -122,8 +124,15 @@ namespace PlatformerGameProject
              LeoCreating();
              
             pictureBox1.Image = Properties.Resources.bear;
+            sec += timer1.Interval;
+            if (sec >= maxTime)
+            {
+                sec = 0;
+                Oscar o = OscarCreating(20, 50, 50);
+                oList.Add(o);
+            }
             
-             
+
 
              g.DrawImage(ImOscarBottom, o.BottomOscar);
              g.DrawImage(ImOscarTop, o.TopOscar);
