@@ -119,8 +119,6 @@ namespace PlatformerGameProject
             pictureBox1.Image = Properties.Resources.bear;
              
              
-             Oscar o = OscarCreating(20, 50, 50);
-             oList.Add(o);
 
              //g.DrawImage(ImOscarBottom, o.BottomOscar);
              //g.DrawImage(ImOscarTop, o.TopOscar);
