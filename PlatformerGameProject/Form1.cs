@@ -16,10 +16,10 @@ namespace PlatformerGameProject
         Image ImLeo = Properties.Resources.LeoImage;
         Image ImOscarBottom = Properties.Resources.OscarImageBottom;
         Image ImOscarTop = Properties.Resources.OscarImageTop;
-
+        List<Oscar> oList = new List<Oscar>();
 
         Leo LeoCr = new Leo();
-
+        Oscar o = new Oscar();
         float maxLeoSpeed = -8;
 
         Graphics g;
@@ -59,7 +59,7 @@ namespace PlatformerGameProject
 
         private Oscar OscarCreating(float leoHeight, float OscarHeight, float OscarWidth)
          {
-             Oscar o = new Oscar();
+            
 
              Random rnd = new Random();
 
@@ -78,6 +78,16 @@ namespace PlatformerGameProject
         {
             LeoCr.Yspeed += SpeedUp;
             LeoCr.LeoSquare.Location = new PointF(LeoCr.LeoSquare.Location.X, LeoCr.LeoSquare.Location.Y + LeoCr.Yspeed);
+        }
+        private void UpdateOscar()
+        {
+            for (int i = 0; i < oList.Count; i++)
+            {
+                Oscar osc = oList[i];
+                o.TopOscar.Location = new PointF(o.TopOscar.Location.X - 2, o.TopOscar.Location.Y);
+                o.BottomOscar.Location = new PointF(o.BottomOscar.Location.X - 2, o.BottomOscar.Location.Y);
+                oList[i] = osc;
+            }
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
@@ -107,9 +117,10 @@ namespace PlatformerGameProject
 
              LeoCreating();
             pictureBox1.Image = Properties.Resources.bear;
-             List<Oscar> oList = new List<Oscar>();
-
-             //Oscar o = OscarCreating(20, 50, 50);
+             
+             
+             Oscar o = OscarCreating(20, 50, 50);
+             oList.Add(o);
 
              //g.DrawImage(ImOscarBottom, o.BottomOscar);
              //g.DrawImage(ImOscarTop, o.TopOscar);
