@@ -16,14 +16,20 @@ namespace PlatformerGameProject
         Image ImLeo = Properties.Resources.LeoImage;
         Image ImOscarBottom = Properties.Resources.OscarImageBottom;
         Image ImOscarTop = Properties.Resources.OscarImageTop;
+
         List<Oscar> oList = new List<Oscar>();
 
         Leo LeoCr = new Leo();
         Oscar o = new Oscar();
+        Oscar osc;
+
         float maxLeoSpeed = -8;
+
         int sec = 0;
-        int maxTime = 2000;
+        int maxTime = 200;
         
+        float OscarHeight = 300;
+        float OscarWidth = 100;
 
         Graphics g;
 
@@ -32,10 +38,10 @@ namespace PlatformerGameProject
         public Form1()
         {
             InitializeComponent();
-            BackgroundImage = Properties.Resources.mountains;
-            ImageAnimator.Animate(BackgroundImage, OnFrameChanged);
-            this.BackgroundImageLayout = ImageLayout.Stretch;
-         SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
+            //BackgroundImage = Properties.Resources.mountains;
+            //ImageAnimator.Animate(BackgroundImage, OnFrameChanged);
+            //this.BackgroundImageLayout = ImageLayout.Stretch;
+            //SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
         }       
 
         private void OnFrameChanged(object sender, EventArgs e)
@@ -60,10 +66,10 @@ namespace PlatformerGameProject
              LeoCr.rotation = 0;           
          }
 
-        private Oscar OscarCreating(float leoHeight, float OscarHeight, float OscarWidth)
+        private Oscar OscarCreating()
          {
              Random rnd = new Random();
-             o.DistanceBetween = leoHeight*5;
+             o.DistanceBetween = Width/2;
              o.Xlocation = Width;
              o.Ylocation = (rnd.Next((int)o.DistanceBetween) - o.DistanceBetween / 2) + Height / 2;
 
@@ -101,18 +107,26 @@ namespace PlatformerGameProject
         float t;
          private void timer1_Tick(object sender, EventArgs e)
          {
-             UpdateLeo();
-             UpdateOscar();
-             t += LeoCr.Yspeed;
-            // g.Clear(Color.Transparent);
              sec += timer1.Interval;
+
              if (sec >= maxTime)
              {
                  sec = 0;
-                 Oscar or = OscarCreating(20, 50, 50);
+                 Oscar or = OscarCreating();
                  oList.Add(or);
              }
+
+             UpdateLeo();
+
+             UpdateOscar();
+
+             t += LeoCr.Yspeed;
+
+
+             g.Clear(Color.SkyBlue);
+
             g.DrawImage(ImLeo, 0, t, LeoCr.leoWidth, LeoCr.leoHeight);
+
             g.DrawImage(ImOscarBottom, o.BottomOscar);
             g.DrawImage(ImOscarTop, o.TopOscar);
 
@@ -121,12 +135,14 @@ namespace PlatformerGameProject
          private void Form1_Load(object sender, EventArgs e)
          {
              g = CreateGraphics();
+             
 
              g.Transform = new System.Drawing.Drawing2D.Matrix(1, 0, 0, 1, 120, 120);
 
              LeoCreating();
              
-            pictureBox1.Image = Properties.Resources.bear;
+             pictureBox1.Image = Properties.Resources.bear;
+
              timer1.Start();
          }
         
