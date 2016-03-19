@@ -26,7 +26,7 @@ namespace PlatformerGameProject
         float maxLeoSpeed = -8;
 
         int sec = 0;
-        int maxTime = 200;
+        int maxTime = 2000;
         
         float OscarHeight = 300;
         float OscarWidth = 100;
@@ -34,15 +34,15 @@ namespace PlatformerGameProject
         Graphics g;
 
         public const float SpeedUp = 0.5f;
-        
+
         public Form1()
         {
             InitializeComponent();
-            //BackgroundImage = Properties.Resources.mountains;
-            //ImageAnimator.Animate(BackgroundImage, OnFrameChanged);
-            //this.BackgroundImageLayout = ImageLayout.Stretch;
-            //SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
-        }       
+            BackgroundImage = Properties.Resources.mountains;
+            ImageAnimator.Animate(BackgroundImage, OnFrameChanged);
+            this.BackgroundImageLayout = ImageLayout.Stretch;
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
+        }
 
         private void OnFrameChanged(object sender, EventArgs e)
         {
@@ -123,7 +123,7 @@ namespace PlatformerGameProject
              t += LeoCr.Yspeed;
 
 
-             g.Clear(Color.SkyBlue);
+             //g.Clear(Color.SkyBlue);
 
             g.DrawImage(ImLeo, 0, t, LeoCr.leoWidth, LeoCr.leoHeight);
 
@@ -141,7 +141,7 @@ namespace PlatformerGameProject
 
              LeoCreating();
              
-             pictureBox1.Image = Properties.Resources.bear;
+            pictureBox1.Image = Properties.Resources.bear;
 
              timer1.Start();
          }

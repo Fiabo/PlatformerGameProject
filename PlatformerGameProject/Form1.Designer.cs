@@ -42,9 +42,9 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Location = new System.Drawing.Point(-1, 288);
+            this.pictureBox1.Location = new System.Drawing.Point(1, 284);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(113, 175);
+            this.pictureBox1.Size = new System.Drawing.Size(120, 178);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -56,6 +56,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(484, 462);
             this.Controls.Add(this.pictureBox1);
+            this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.Color.Transparent;
             this.Name = "Form1";
             this.Text = "Form1";
