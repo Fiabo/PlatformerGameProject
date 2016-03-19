@@ -103,9 +103,13 @@ namespace PlatformerGameProject
          private void timer1_Tick(object sender, EventArgs e)
          {
              UpdateLeo();
+             Oscar o = OscarCreating(20, 50, 50);
+             oList.Add(o);
+             UpdateOscar();
              t += LeoCr.Yspeed;
             // g.Clear(Color.Transparent);
             g.DrawImage(ImLeo, 0, t, LeoCr.leoWidth, LeoCr.leoHeight);
+            
 
          }
 
@@ -116,17 +120,19 @@ namespace PlatformerGameProject
              g.Transform = new System.Drawing.Drawing2D.Matrix(1, 0, 0, 1, 120, 120);
 
              LeoCreating();
+             
             pictureBox1.Image = Properties.Resources.bear;
+            
              
-             
-             Oscar o = OscarCreating(20, 50, 50);
-             oList.Add(o);
 
-             //g.DrawImage(ImOscarBottom, o.BottomOscar);
-             //g.DrawImage(ImOscarTop, o.TopOscar);
+             g.DrawImage(ImOscarBottom, o.BottomOscar);
+             g.DrawImage(ImOscarTop, o.TopOscar);
 
              timer1.Start();
          }
+         int time;
+
+         
 
          
 
