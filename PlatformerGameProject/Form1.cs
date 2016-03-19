@@ -16,35 +16,20 @@ namespace PlatformerGameProject
         Image ImLeo = Properties.Resources.LeoImage;
         Image ImOscarBottom = Properties.Resources.OscarImageBottom;
         Image ImOscarTop = Properties.Resources.OscarImageTop;
-       
 
         Leo LeoCr = new Leo();
 
-        float maxLeoSpeed = -8;
+        float maxLeoSpeed = -123;
 
         Graphics g;
 
-        public const float SpeedUp = 0.5f;
+        public const float SpeedUp = 1.5f;
         
         public Form1()
         {
             InitializeComponent();
-            BackgroundImage = Properties.Resources.mountains;
-            ImageAnimator.Animate(BackgroundImage, OnFrameChanged);
-            this.BackgroundImageLayout = ImageLayout.Stretch;
-         SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
-        }
+        }       
 
-        private void OnFrameChanged(object sender, EventArgs e)
-        {
-            if (InvokeRequired)
-            {
-                BeginInvoke((Action)(() => OnFrameChanged(sender, e)));
-                return;
-            }
-            ImageAnimator.UpdateFrames();
-            Invalidate(false);
-        }
         public void LeoCreating()
          {       
              LeoCr.LeoFace = ImLeo;
@@ -82,21 +67,20 @@ namespace PlatformerGameProject
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-            LeoCr.Yspeed -= 10;
+            LeoCr.Yspeed -= 15;
 
             if (LeoCr.Yspeed < maxLeoSpeed)
             {
                 LeoCr.Yspeed = maxLeoSpeed;
             }
         }
-        float t;
+
          private void timer1_Tick(object sender, EventArgs e)
          {
              UpdateLeo();
-            t += LeoCr.Yspeed;
-            // g.Clear(Color.Transparent);
-            g.DrawImage(ImLeo, 0, t, LeoCr.leoWidth, LeoCr.leoHeight);
-            
+
+             g.Clear(Color.SkyBlue);
+             g.DrawImage(ImLeo, 0, LeoCr.Yspeed, LeoCr.leoWidth, LeoCr.leoHeight);
          }
 
          private void Form1_Load(object sender, EventArgs e)
@@ -104,13 +88,12 @@ namespace PlatformerGameProject
              g = CreateGraphics();
 
              LeoCreating();
-            
-            g.Transform = new System.Drawing.Drawing2D.Matrix(1, 0, 0, 1, 120, 120);
+
+             g.Transform = new System.Drawing.Drawing2D.Matrix(1, 0, 0, 1, 120, 120);
 
              Oscar o = OscarCreating(20, 50, 50);
-            pictureBox1.Image = Properties.Resources.bear;
-            
-            g.DrawImage(ImOscarBottom, o.BottomOscar);
+
+             g.DrawImage(ImOscarBottom, o.BottomOscar);
              g.DrawImage(ImOscarTop, o.TopOscar);
 
              timer1.Start();
