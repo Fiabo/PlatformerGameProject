@@ -22,7 +22,7 @@ namespace PlatformerGameProject
         Oscar o = new Oscar();
         float maxLeoSpeed = -8;
         int sec = 0;
-        int maxTime = 228;
+        int maxTime = 2000;
         
 
         Graphics g;
@@ -62,12 +62,8 @@ namespace PlatformerGameProject
 
         private Oscar OscarCreating(float leoHeight, float OscarHeight, float OscarWidth)
          {
-            
-
              Random rnd = new Random();
-
              o.DistanceBetween = leoHeight*5;
-
              o.Xlocation = Width;
              o.Ylocation = (rnd.Next((int)o.DistanceBetween) - o.DistanceBetween / 2) + Height / 2;
 
@@ -106,12 +102,19 @@ namespace PlatformerGameProject
          private void timer1_Tick(object sender, EventArgs e)
          {
              UpdateLeo();
-             
              UpdateOscar();
              t += LeoCr.Yspeed;
             // g.Clear(Color.Transparent);
+             sec += timer1.Interval;
+             if (sec >= maxTime)
+             {
+                 sec = 0;
+                 Oscar or = OscarCreating(20, 50, 50);
+                 oList.Add(or);
+             }
             g.DrawImage(ImLeo, 0, t, LeoCr.leoWidth, LeoCr.leoHeight);
-            
+            g.DrawImage(ImOscarBottom, o.BottomOscar);
+            g.DrawImage(ImOscarTop, o.TopOscar);
 
          }
 
@@ -124,26 +127,9 @@ namespace PlatformerGameProject
              LeoCreating();
              
             pictureBox1.Image = Properties.Resources.bear;
-            sec += timer1.Interval;
-            if (sec >= maxTime)
-            {
-                sec = 0;
-                Oscar o = OscarCreating(20, 50, 50);
-                oList.Add(o);
-            }
-            
-
-
-             g.DrawImage(ImOscarBottom, o.BottomOscar);
-             g.DrawImage(ImOscarTop, o.TopOscar);
-
              timer1.Start();
          }
-         int time;
-
-         
-
-         
+        
 
     }
 
