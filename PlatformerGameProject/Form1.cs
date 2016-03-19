@@ -23,7 +23,7 @@ namespace PlatformerGameProject
 
         Graphics g;
 
-        public const float SpeedUp = 1.5f;
+        public const float SpeedUp = 0.5f;
         
         public Form1()
         {
@@ -67,7 +67,7 @@ namespace PlatformerGameProject
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-            LeoCr.Yspeed -= 15;
+            LeoCr.Yspeed -= 10;
 
             if (LeoCr.Yspeed < maxLeoSpeed)
             {
@@ -75,12 +75,15 @@ namespace PlatformerGameProject
             }
         }
 
+        float t;
+
          private void timer1_Tick(object sender, EventArgs e)
          {
              UpdateLeo();
+             t += LeoCr.Yspeed;
 
              g.Clear(Color.SkyBlue);
-             g.DrawImage(ImLeo, 0, LeoCr.Yspeed, LeoCr.leoWidth, LeoCr.leoHeight);
+             g.DrawImage(ImLeo, 0, t, LeoCr.leoWidth, LeoCr.leoHeight);
          }
 
          private void Form1_Load(object sender, EventArgs e)
