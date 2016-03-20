@@ -211,6 +211,11 @@ namespace PlatformerGameProject
                 {
                     return true;
                 }
+
+                if (LeoCr.LeoSquare.Y >= 520)  //checking lower border intersection
+                {
+                    return true;
+                }
             }
 
             return false;
@@ -239,7 +244,7 @@ namespace PlatformerGameProject
     }
 
 
-    struct Leo  //we used structs instead of classes because it came in handier than classes
+    struct Leo
     {
         public RectangleF LeoSquare;
 
