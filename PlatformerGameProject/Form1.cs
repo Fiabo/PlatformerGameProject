@@ -160,16 +160,16 @@ namespace PlatformerGameProject
 
                 g.DrawString("YOU LOST", LeoFont, Brushes.Red, 100, 180);
                 
-                timer1.Stop();
-                Thread.Sleep(1500);
-                score = 0;
-                pictureBox2.Visible = true;
-                pictureBox2.Enabled = true;
-                pictureBox3.Visible = true;
-                pictureBox3.Enabled = true;
-                gameOver = false;
-                pictureBox1.Visible = false;
-                oList.Clear();
+                //timer1.Stop();
+                //Thread.Sleep(1500);
+                //score = 0;
+                //pictureBox2.Visible = true;
+                //pictureBox2.Enabled = true;
+                //pictureBox3.Visible = true;
+                //pictureBox3.Enabled = true;
+                //gameOver = false;
+                //pictureBox1.Visible = false;
+                //oList.Clear();
             }
 
         }
@@ -211,16 +211,19 @@ namespace PlatformerGameProject
                 RectangleF CheckRectTop = osc.TopOscar;
                 RectangleF CheckRectBot = osc.BottomOscar;
 
-                CheckRectTop.Y += 30;
-                CheckRectBot.Y += 50;
+                RectangleF UpperCheck = new RectangleF(0, 0, 500, 1);
+                RectangleF BottomCheck = new RectangleF(0, 500, 500, 1);
 
-                if (LeoCr.LeoSquare.IntersectsWith(CheckRectTop) || LeoCr.LeoSquare.IntersectsWith(CheckRectBot))
+                CheckRectTop.Y += 30;
+                CheckRectTop.X -= 10;
+
+                CheckRectBot.Y += 50;
+                CheckRectTop.X -= 10;
+
+                if (LeoCr.LeoSquare.IntersectsWith(CheckRectTop) || LeoCr.LeoSquare.IntersectsWith(CheckRectBot) || LeoCr.LeoSquare.IntersectsWith(UpperCheck) || LeoCr.LeoSquare.IntersectsWith(BottomCheck))
                 {
                     return true;
                 }
-
-                
-               
             }
 
             return false;
