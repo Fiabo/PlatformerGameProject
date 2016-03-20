@@ -19,28 +19,39 @@ namespace PlatformerGameProject
 
         List<Oscar> oList = new List<Oscar>();
 
+
+        Random r = new Random();
+
+
         Leo LeoCr = new Leo();
         Oscar o = new Oscar();
-        Oscar osc;
+
 
         float maxLeoSpeed = -8;
 
         int sec = 0;
-        int maxTime = 2000;
-        
-        float OscarHeight = 300;
-        float OscarWidth = 100;
+        int maxTime = 4000;
+        public const float SpeedUp = 0.4f;
 
         Graphics g;
 
-        public const float SpeedUp = 0.5f;
+        public float OscarHeight()
+        {
+            float OscarHeight = r.Next(100, Height / 2);
+            return OscarHeight;
+        }
+        public float OscarWidth()
+        {
+            float OscarWidth = OscarHeight() / 3;
+            return OscarWidth;
+        }
 
         public Form1()
         {
             InitializeComponent();
-            BackgroundImage = Properties.Resources.mountains;
-            ImageAnimator.Animate(BackgroundImage, OnFrameChanged);
-            this.BackgroundImageLayout = ImageLayout.Stretch;
+             BackgroundImage = Properties.Resources.mountains; 
+            ImageAnimator.Animate(BackgroundImage, OnFrameChanged); 
+            this.BackgroundImageLayout = ImageLayout.Stretch; 
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
         }
 
@@ -55,30 +66,16 @@ namespace PlatformerGameProject
             Invalidate(false);
         }
         public void LeoCreating()
-         {       
-             LeoCr.LeoFace = ImLeo;
-             LeoCr.Yspeed = 0;
+        {
+            LeoCr.LeoFace = ImLeo;
+            LeoCr.Yspeed = 0;
 
-             LeoCr.leoWidth = Width / 6;
-             LeoCr.leoHeight = Width / 6;
+            LeoCr.leoWidth = Width / 6;
+            LeoCr.leoHeight = Width / 6;
 
-             LeoCr.LeoSquare = new RectangleF(Width / 2 - LeoCr.leoWidth, Height / 2, LeoCr.leoWidth, LeoCr.leoHeight);
-             LeoCr.rotation = 0;           
-         }
+            LeoCr.LeoSquare = new RectangleF(Width / 2 - LeoCr.leoWidth, Height / 2, LeoCr.leoWidth, LeoCr.leoHeight);
 
-        private Oscar OscarCreating()
-         {
-             Random rnd = new Random();
-             o.DistanceBetween = Width/2;
-             o.Xlocation = Width;
-             o.Ylocation = (rnd.Next((int)o.DistanceBetween) - o.DistanceBetween / 2) + Height / 2;
-
-             o.TopOscar = new RectangleF(o.Xlocation, o.Ylocation - o.DistanceBetween / 2 - OscarHeight, OscarWidth, OscarHeight);
-             o.BottomOscar = new RectangleF(o.Xlocation, o.Ylocation + o.DistanceBetween / 2, OscarWidth, OscarHeight);
-
-             return o;
-          }
-
+        }
         private void UpdateLeo()
         {
             LeoCr.Yspeed += SpeedUp;
@@ -89,7 +86,7 @@ namespace PlatformerGameProject
             for (int i = 0; i < oList.Count; i++)
             {
                 Oscar osc = oList[i];
-                o.TopOscar.Location = new PointF(o.TopOscar.Location.X - 2, o.TopOscar.Location.Y);
+                o.TopOscar.Location = new PointF(o.TopOscar.Location.X - 1, o.TopOscar.Location.Y);
                 o.BottomOscar.Location = new PointF(o.BottomOscar.Location.X - 2, o.BottomOscar.Location.Y);
                 oList[i] = osc;
             }
@@ -105,51 +102,57 @@ namespace PlatformerGameProject
             }
         }
         float t;
-         private void timer1_Tick(object sender, EventArgs e)
-         {
-             sec += timer1.Interval;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
 
-             if (sec >= maxTime)
-             {
-                 sec = 0;
-                 Oscar or = OscarCreating();
-                 oList.Add(or);
-             }
+            UpdateLeo();
+            t += LeoCr.Yspeed;
+            //g.Clear(Color.Snow);
+            UpdateOscar();
+            sec += timer1.Interval;
 
-             UpdateLeo();
-
-             UpdateOscar();
-
-             t += LeoCr.Yspeed;
-
-
-             //g.Clear(Color.SkyBlue);
-
-            g.DrawImage(ImLeo, 0, t, LeoCr.leoWidth, LeoCr.leoHeight);
-
+            if (sec >= maxTime)
+            {
+                sec = 0;
+                Oscar osc = OscarCreating();
+                oList.Add(osc);
+            }
             g.DrawImage(ImOscarBottom, o.BottomOscar);
             g.DrawImage(ImOscarTop, o.TopOscar);
+            g.DrawImage(ImLeo, 0, t, LeoCr.leoWidth, LeoCr.leoHeight);
 
-         }
 
-         private void Form1_Load(object sender, EventArgs e)
-         {
-             g = CreateGraphics();
-             
 
-             g.Transform = new System.Drawing.Drawing2D.Matrix(1, 0, 0, 1, 120, 120);
+        }
 
-             LeoCreating();
-             
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            g = CreateGraphics();
+
+
+            g.Transform = new System.Drawing.Drawing2D.Matrix(1, 0, 0, 1, 200, 250);
+
+            LeoCreating();
+
             pictureBox1.Image = Properties.Resources.bear;
 
-             timer1.Start();
-         }
-        
+            timer1.Start();
 
+        }
+        private Oscar OscarCreating()
+        {
+
+            o.DistanceBetween = Width / 3;
+            o.Xlocation = 400;
+            o.Ylocation = -45;
+            o.TopOscar = new RectangleF(o.Xlocation, o.Ylocation - o.DistanceBetween / 2 - OscarHeight(), OscarWidth(), OscarHeight());
+            o.BottomOscar = new RectangleF(o.Xlocation, o.Ylocation + o.DistanceBetween / 2 + 50, OscarWidth(), OscarHeight());
+
+            return o;
+        }
     }
 
-       
+
     struct Leo
     {
         public RectangleF LeoSquare;
@@ -158,7 +161,7 @@ namespace PlatformerGameProject
         public Image LeoFace;
 
         public float Yspeed;
-        public float rotation;
+
     }
 
     struct Oscar
@@ -170,6 +173,5 @@ namespace PlatformerGameProject
         public float Ylocation;
         public float DistanceBetween;
     }
-
     
 }
