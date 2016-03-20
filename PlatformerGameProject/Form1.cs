@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Media;
+//using System.Media;
 namespace PlatformerGameProject
 {
     public partial class Form1 : Form
     {
-        SoundPlayer Leos;
+        //SoundPlayer Leos;
 
         Image ImLeo = Properties.Resources.LeoImage;
         Image ImOscarBottom = Properties.Resources.OscarImageBottom;
@@ -46,8 +46,8 @@ namespace PlatformerGameProject
         {
             InitializeComponent();
 
-            Leos = new SoundPlayer();
-            Leos.Stream = Properties.Resources.LeoSound;
+            //Leos = new SoundPlayer();
+            //Leos.Stream = Properties.Resources.LeoSound;
 
             BackgroundImage = Properties.Resources.mountains; 
             ImageAnimator.Animate(BackgroundImage, OnFrameChanged); 
@@ -149,7 +149,7 @@ namespace PlatformerGameProject
             
             g.Transform = new System.Drawing.Drawing2D.Matrix(1, 0, 0, 1, 200, 250);
 
-            Leos.PlayLooping();
+            //Leos.PlayLooping();
 
             LeoCreating();
 
