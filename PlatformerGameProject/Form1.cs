@@ -19,40 +19,29 @@ namespace PlatformerGameProject
 
         List<Oscar> oList = new List<Oscar>();
 
-
         Random r = new Random();
-
 
         Leo LeoCr = new Leo();
         Oscar o = new Oscar();
 
-
         float maxLeoSpeed = -8;
 
         int sec = 0;
-        int maxTime = 4000;
+        int maxTime = 2000;
         public const float SpeedUp = 0.4f;
 
         Graphics g;
 
-        public float OscarHeight()
-        {
-            float OscarHeight = r.Next(100, Height / 2);
-            return OscarHeight;
-        }
-        public float OscarWidth()
-        {
-            float OscarWidth = OscarHeight() / 3;
-            return OscarWidth;
-        }
+        float OscarHeight = 200;
+        float OscarWidth = 50;
 
         public Form1()
         {
             InitializeComponent();
-             BackgroundImage = Properties.Resources.mountains; 
-            ImageAnimator.Animate(BackgroundImage, OnFrameChanged); 
-            this.BackgroundImageLayout = ImageLayout.Stretch; 
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
+            // BackgroundImage = Properties.Resources.mountains; 
+            //ImageAnimator.Animate(BackgroundImage, OnFrameChanged); 
+            //this.BackgroundImageLayout = ImageLayout.Stretch; 
+            //SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
         }
 
         private void OnFrameChanged(object sender, EventArgs e)
@@ -86,9 +75,12 @@ namespace PlatformerGameProject
             for (int i = 0; i < oList.Count; i++)
             {
                 Oscar osc = oList[i];
-                o.TopOscar.Location = new PointF(o.TopOscar.Location.X - 1, o.TopOscar.Location.Y);
-                o.BottomOscar.Location = new PointF(o.BottomOscar.Location.X - 2, o.BottomOscar.Location.Y);
+                osc.TopOscar.Location = new PointF(osc.TopOscar.Location.X - 2, osc.TopOscar.Location.Y);
+                osc.BottomOscar.Location = new PointF(osc.BottomOscar.Location.X - 2, osc.BottomOscar.Location.Y);
                 oList[i] = osc;
+
+                g.DrawImage(ImOscarBottom, osc.BottomOscar);
+                g.DrawImage(ImOscarTop, osc.TopOscar);
             }
         }
 
@@ -106,9 +98,13 @@ namespace PlatformerGameProject
         {
 
             UpdateLeo();
+
             t += LeoCr.Yspeed;
-            //g.Clear(Color.Snow);
+
+            g.Clear(Color.Snow);
+
             UpdateOscar();
+
             sec += timer1.Interval;
 
             if (sec >= maxTime)
@@ -117,8 +113,9 @@ namespace PlatformerGameProject
                 Oscar osc = OscarCreating();
                 oList.Add(osc);
             }
-            g.DrawImage(ImOscarBottom, o.BottomOscar);
-            g.DrawImage(ImOscarTop, o.TopOscar);
+
+            //g.DrawImage(ImOscarBottom, o.BottomOscar);
+            //g.DrawImage(ImOscarTop, o.TopOscar);
             g.DrawImage(ImLeo, 0, t, LeoCr.leoWidth, LeoCr.leoHeight);
 
 
@@ -128,7 +125,6 @@ namespace PlatformerGameProject
         private void Form1_Load(object sender, EventArgs e)
         {
             g = CreateGraphics();
-
 
             g.Transform = new System.Drawing.Drawing2D.Matrix(1, 0, 0, 1, 200, 250);
 
@@ -141,12 +137,13 @@ namespace PlatformerGameProject
         }
         private Oscar OscarCreating()
         {
+            o.DistanceBetween = 100;
 
-            o.DistanceBetween = Width / 3;
-            o.Xlocation = 400;
-            o.Ylocation = -45;
-            o.TopOscar = new RectangleF(o.Xlocation, o.Ylocation - o.DistanceBetween / 2 - OscarHeight(), OscarWidth(), OscarHeight());
-            o.BottomOscar = new RectangleF(o.Xlocation, o.Ylocation + o.DistanceBetween / 2 + 50, OscarWidth(), OscarHeight());
+            o.Xlocation = Width;
+            o.Ylocation = -r.Next(50, 100);
+
+            o.TopOscar = new RectangleF(o.Xlocation, o.Ylocation - 2*o.DistanceBetween, OscarWidth, OscarHeight);
+            o.BottomOscar = new RectangleF(o.Xlocation, o.Ylocation + 2*o.DistanceBetween, OscarWidth, OscarHeight);
 
             return o;
         }
