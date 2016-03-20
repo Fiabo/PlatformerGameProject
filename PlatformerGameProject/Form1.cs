@@ -7,11 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Media;
 namespace PlatformerGameProject
 {
     public partial class Form1 : Form
     {
+        SoundPlayer Leos;
 
         Image ImLeo = Properties.Resources.LeoImage;
         Image ImOscarBottom = Properties.Resources.OscarImageBottom;
@@ -44,10 +45,15 @@ namespace PlatformerGameProject
         public Form1()
         {
             InitializeComponent();
-            // BackgroundImage = Properties.Resources.mountains; 
-            //ImageAnimator.Animate(BackgroundImage, OnFrameChanged); 
-            //this.BackgroundImageLayout = ImageLayout.Stretch; 
-            //SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
+
+            Leos = new SoundPlayer();
+            Leos.Stream = Properties.Resources.LeoSound;
+
+            BackgroundImage = Properties.Resources.mountains; 
+            ImageAnimator.Animate(BackgroundImage, OnFrameChanged); 
+
+            this.BackgroundImageLayout = ImageLayout.Stretch; 
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
         }
 
         private void OnFrameChanged(object sender, EventArgs e)
@@ -109,7 +115,7 @@ namespace PlatformerGameProject
 
             t += LeoCr.Yspeed;
 
-            g.Clear(Color.Snow);
+            //g.Clear(Color.Snow);
 
             UpdateOscar();
 
@@ -132,7 +138,7 @@ namespace PlatformerGameProject
                 {
                     LeoCr.Yspeed = -maxLeoSpeed;
                 }
-                
+
             }
 
         }
@@ -142,6 +148,8 @@ namespace PlatformerGameProject
             g = CreateGraphics();
             
             g.Transform = new System.Drawing.Drawing2D.Matrix(1, 0, 0, 1, 200, 250);
+
+            Leos.PlayLooping();
 
             LeoCreating();
 
@@ -172,7 +180,7 @@ namespace PlatformerGameProject
                 {
                     return true;
                 }
-            }
+        }
 
             return false;
         }
@@ -181,7 +189,7 @@ namespace PlatformerGameProject
         {
             gameOver = true;
         }
-
+        
         private bool gameOver;
 
         
