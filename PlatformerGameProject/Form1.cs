@@ -18,20 +18,25 @@ namespace PlatformerGameProject
         Image ImOscarTop = Properties.Resources.OscarImageTop;
 
         List<Oscar> oList = new List<Oscar>();
-        RectangleF LineCheck = new RectangleF(501, 0, 500, 1);
+
+        //Rectangle LineCheck = new Rectangle(240, 240, 500, 1);
+
         Random r = new Random();
 
         Leo LeoCr = new Leo();
         Oscar o = new Oscar();
 
         float maxLeoSpeed = -8;
-        bool check = false;
 
         int sec = 0;
+
         int maxTime = 1500;
+
         public const float SpeedUp = 0.4f;
 
         Graphics g;
+
+        float t;
 
         float OscarHeight = 210;
         float OscarWidth = 70;
@@ -39,10 +44,10 @@ namespace PlatformerGameProject
         public Form1()
         {
             InitializeComponent();
-             BackgroundImage = Properties.Resources.mountains; 
-            ImageAnimator.Animate(BackgroundImage, OnFrameChanged); 
-            this.BackgroundImageLayout = ImageLayout.Stretch; 
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
+            // BackgroundImage = Properties.Resources.mountains; 
+            //ImageAnimator.Animate(BackgroundImage, OnFrameChanged); 
+            //this.BackgroundImageLayout = ImageLayout.Stretch; 
+            //SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
         }
 
         private void OnFrameChanged(object sender, EventArgs e)
@@ -88,6 +93,8 @@ namespace PlatformerGameProject
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
+            if (gameOver) return;
+
             LeoCr.Yspeed -= 10;
 
             if (LeoCr.Yspeed < maxLeoSpeed)
@@ -95,15 +102,14 @@ namespace PlatformerGameProject
                 LeoCr.Yspeed = maxLeoSpeed;
             }
         }
-        float t;
+
         private void timer1_Tick(object sender, EventArgs e)
         {
-
             UpdateLeo();
 
             t += LeoCr.Yspeed;
 
-            //g.Clear(Color.Snow);
+            g.Clear(Color.Snow);
 
             UpdateOscar();
 
@@ -116,12 +122,18 @@ namespace PlatformerGameProject
                 oList.Add(osc);
             }
             
-
-            //g.DrawImage(ImOscarBottom, o.BottomOscar);
-            //g.DrawImage(ImOscarTop, o.TopOscar);
             g.DrawImage(ImLeo, 0, t, LeoCr.leoWidth, LeoCr.leoHeight);
 
+            if (CollisionCheck())
+            {
+                EndOfGame();
 
+                if (LeoCr.Yspeed < 0)
+                {
+                    LeoCr.Yspeed = -maxLeoSpeed;
+                }
+                
+            }
 
         }
 
@@ -134,15 +146,11 @@ namespace PlatformerGameProject
             LeoCreating();
 
             pictureBox1.Image = Properties.Resources.bear;
-            textBox1.Visible = false;
+
             timer1.Start();
 
         }
-        public bool CrossCheck()
-        {
-            check = LeoCr.LeoSquare.IntersectsWith(LineCheck);
-            return check;
-        }
+
         private Oscar OscarCreating()
         {
             o.DistanceBetween = 95;
@@ -155,23 +163,27 @@ namespace PlatformerGameProject
 
             return o;
         }
-        public void Die()
-        {
-            if (check == true)
-                Gameover();
-        }
-        public void Gameover()
-        {
-            timer1.Enabled = false;
-            LeoCr.Yspeed = 0;
-            textBox1.Visible = true;
 
+        private bool CollisionCheck()
+        {
+            foreach(Oscar osc in oList)
+            {
+                if (LeoCr.LeoSquare.IntersectsWith(osc.BottomOscar) || LeoCr.LeoSquare.IntersectsWith(osc.TopOscar))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void EndOfGame()
         {
-            Console.WriteLine("You died");
+            gameOver = true;
         }
+
+        private bool gameOver;
+
         
     }
 
