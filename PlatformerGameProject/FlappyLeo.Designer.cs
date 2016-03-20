@@ -1,6 +1,6 @@
 ﻿namespace PlatformerGameProject
 {
-    partial class Form1
+    partial class FlappyLeo
     {
         /// <summary>
         /// Required designer variable.
@@ -86,6 +86,7 @@
             this.Controls.Add(this.pictureBox1);
             this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.Color.Transparent;
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Form1";
             this.TransparencyKey = System.Drawing.Color.Transparent;
