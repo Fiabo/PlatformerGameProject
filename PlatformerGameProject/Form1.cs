@@ -7,12 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-//using System.Media;
+using System.Media;
+using System.Threading;
+
 namespace PlatformerGameProject
 {
     public partial class Form1 : Form
     {
-        //SoundPlayer Leos;
+        SoundPlayer Leos;
 
         Image ImLeo = Properties.Resources.LeoImage;
         Image ImOscarBottom = Properties.Resources.OscarImageBottom;
@@ -48,14 +50,14 @@ namespace PlatformerGameProject
         {
             InitializeComponent();
 
-            //Leos = new SoundPlayer();
-            //Leos.Stream = Properties.Resources.LeoSound;
+            Leos = new SoundPlayer();
+            Leos.Stream = Properties.Resources.LeoSound;
 
-            //BackgroundImage = Properties.Resources.mountains; 
-            //ImageAnimator.Animate(BackgroundImage, OnFrameChanged); 
+            BackgroundImage = Properties.Resources.mountains;
+            ImageAnimator.Animate(BackgroundImage, OnFrameChanged);
 
-            //this.BackgroundImageLayout = ImageLayout.Stretch; 
-            //SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
+            this.BackgroundImageLayout = ImageLayout.Stretch;
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
         }
 
         private void OnFrameChanged(object sender, EventArgs e)
@@ -124,7 +126,7 @@ namespace PlatformerGameProject
 
             t += LeoCr.Yspeed;
 
-            g.Clear(Color.Snow);
+            //g.Clear(Color.Snow);
 
             UpdateOscar();
 
@@ -151,9 +153,24 @@ namespace PlatformerGameProject
             }
 
             
-            g.DrawString(score.ToString(), LeoFont, Brushes.Violet, 200, 0);
+            g.DrawString(score.ToString(), LeoFont, Brushes.AntiqueWhite, 200, 0);
 
-            if (gameOver) g.DrawString("YOU LOST", LeoFont, Brushes.Red, 100, 180);
+            if (gameOver)
+            {
+
+                g.DrawString("YOU LOST", LeoFont, Brushes.Red, 100, 180);
+                
+                timer1.Stop();
+                Thread.Sleep(1500);
+                score = 0;
+                pictureBox2.Visible = true;
+                pictureBox2.Enabled = true;
+                pictureBox3.Visible = true;
+                pictureBox3.Enabled = true;
+                gameOver = false;
+                pictureBox1.Visible = false;
+                oList.Clear();
+            }
 
         }
 
@@ -163,13 +180,7 @@ namespace PlatformerGameProject
             
             //g.Transform = new System.Drawing.Drawing2D.Matrix(1, 0, 0, 1, 200, 250);
 
-            //Leos.PlayLooping();
-
-            LeoCreating();
-
-            pictureBox1.Image = Properties.Resources.bear;
-
-            timer1.Start();
+            
 
         }
 
@@ -222,6 +233,26 @@ namespace PlatformerGameProject
         
         private bool gameOver;
 
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            Leos.PlayLooping();
+
+            LeoCreating();
+
+            pictureBox1.Image = Properties.Resources.bear;
+            pictureBox1.Visible = true;
+            timer1.Start();
+           
+            pictureBox2.Hide();
+            pictureBox3.Hide();
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+      
         
     }
 
