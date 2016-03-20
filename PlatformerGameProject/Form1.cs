@@ -49,11 +49,11 @@ namespace PlatformerGameProject
             //Leos = new SoundPlayer();
             //Leos.Stream = Properties.Resources.LeoSound;
 
-            BackgroundImage = Properties.Resources.mountains; 
-            ImageAnimator.Animate(BackgroundImage, OnFrameChanged); 
+            //BackgroundImage = Properties.Resources.mountains; 
+            //ImageAnimator.Animate(BackgroundImage, OnFrameChanged); 
 
-            this.BackgroundImageLayout = ImageLayout.Stretch; 
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
+            //this.BackgroundImageLayout = ImageLayout.Stretch; 
+            //SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
         }
 
         private void OnFrameChanged(object sender, EventArgs e)
@@ -71,8 +71,8 @@ namespace PlatformerGameProject
             LeoCr.LeoFace = ImLeo;
             LeoCr.Yspeed = 0;
 
-            LeoCr.leoWidth = Width / 6;
-            LeoCr.leoHeight = Width / 6;
+            LeoCr.leoWidth = Width/6;
+            LeoCr.leoHeight = Width/6;
 
             LeoCr.LeoSquare = new RectangleF(Width / 2 - LeoCr.leoWidth, Height / 2, LeoCr.leoWidth, LeoCr.leoHeight);
 
@@ -93,7 +93,7 @@ namespace PlatformerGameProject
 
                 g.DrawImage(ImOscarBottom, osc.BottomOscar);
                 g.DrawImage(ImOscarTop, osc.TopOscar);
-                
+
             }
         }
 
@@ -109,13 +109,16 @@ namespace PlatformerGameProject
             }
         }
 
+        int lol = 0;
+        string s;
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             UpdateLeo();
 
             t += LeoCr.Yspeed;
 
-            //g.Clear(Color.Snow);
+            g.Clear(Color.Snow);
 
             UpdateOscar();
 
@@ -140,6 +143,9 @@ namespace PlatformerGameProject
                 }
 
             }
+
+            s = lol.ToString();
+            g.DrawString(s, LeoFont, Brushes.Black, 0, -200);
 
         }
 
@@ -172,15 +178,20 @@ namespace PlatformerGameProject
             return o;
         }
 
+        
+
+        Font LeoFont = new Font(new FontFamily("Arial"), 40, FontStyle.Bold);
+
         private bool CollisionCheck()
         {
             foreach(Oscar osc in oList)
             {
                 if (LeoCr.LeoSquare.IntersectsWith(osc.BottomOscar) || LeoCr.LeoSquare.IntersectsWith(osc.TopOscar))
                 {
-                    return true;
+                    lol++;
+                    if (lol==200) return true;
                 }
-        }
+            }
 
             return false;
         }
