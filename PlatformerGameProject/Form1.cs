@@ -20,31 +20,34 @@ namespace PlatformerGameProject
         Image ImOscarBottom = Properties.Resources.OscarImageBottom;
         Image ImOscarTop = Properties.Resources.OscarImageTop;
 
-        List<Oscar> oList = new List<Oscar>();
+        Font LeoFont = new Font(new FontFamily("Arial"), 40, FontStyle.Bold);
+        Font LostFont = new Font(new FontFamily("Arial"), 20, FontStyle.Bold);
+
+        Graphics g;
 
         Random r = new Random();
 
         Leo LeoCr = new Leo();
         Oscar o = new Oscar();
 
-        float maxLeoSpeed = -8;
+        List<Oscar> oList = new List<Oscar>();
+
+        private bool gameOver;
 
         int sec = 0;
-
-        int endsec = 0;
 
         int score = 0;
 
         int maxTime = 1000;
 
+        float t = 0;
+
         public const float SpeedUp = 0.4f;
 
-        Graphics g;
+        public const float maxLeoSpeed = -12;
 
-        float t;
-
-        float OscarHeight = 210;
-        float OscarWidth = 70;
+        public const float OscarHeight = 210;
+        public const float OscarWidth = 70;
 
         public Form1()
         {
@@ -70,20 +73,36 @@ namespace PlatformerGameProject
             ImageAnimator.UpdateFrames();
             Invalidate(false);
         }
+
         public void LeoCreating()
         {
             LeoCr.LeoFace = ImLeo;
+
             LeoCr.Yspeed = 0;
 
-            LeoCr.leoWidth = Width/8;
-            LeoCr.leoHeight = Width/8;
+            LeoCr.leoWidth = Width / 8;
+            LeoCr.leoHeight = Width / 8;
 
             LeoCr.LeoSquare = new RectangleF(Width / 2 - LeoCr.leoWidth, Height / 2, LeoCr.leoWidth, LeoCr.leoHeight);
-
         }
+
+        private Oscar OscarCreating()
+        {
+            o.DistanceBetween = 190;
+
+            o.Xlocation = Width;
+            o.Ylocation = r.Next(50, 200);
+
+            o.TopOscar = new RectangleF(o.Xlocation, o.Ylocation - o.DistanceBetween, OscarWidth, OscarHeight);
+            o.BottomOscar = new RectangleF(o.Xlocation, o.Ylocation + o.DistanceBetween, OscarWidth, OscarHeight);
+
+            return o;
+        }
+
         private void UpdateLeo()
         {
             LeoCr.Yspeed += SpeedUp;
+
             LeoCr.LeoSquare.Location = new PointF(LeoCr.LeoSquare.Location.X, LeoCr.LeoSquare.Location.Y + LeoCr.Yspeed);
         }
         private void UpdateOscar()
@@ -91,6 +110,7 @@ namespace PlatformerGameProject
             for (int i = 0; i < oList.Count; i++)
             {
                 Oscar osc = oList[i];
+
                 osc.TopOscar.Location = new PointF(osc.TopOscar.Location.X - 5, osc.TopOscar.Location.Y);
                 osc.BottomOscar.Location = new PointF(osc.BottomOscar.Location.X - 5, osc.BottomOscar.Location.Y);
 
@@ -104,15 +124,19 @@ namespace PlatformerGameProject
 
                 g.DrawImage(ImOscarBottom, osc.BottomOscar);
                 g.DrawImage(ImOscarTop, osc.TopOscar);
-
             }
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            g = CreateGraphics();
+        }    
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
             if (gameOver) return;
 
-            LeoCr.Yspeed -= 13;
+            LeoCr.Yspeed -= 15;
 
             if (LeoCr.Yspeed < maxLeoSpeed)
             {
@@ -120,65 +144,53 @@ namespace PlatformerGameProject
             }
         }
 
+        private void Form1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (gameOver)
+            {
+                Application.Restart();
+            }
+        }
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             UpdateLeo();
-            t += LeoCr.Yspeed;
+
             UpdateOscar();
+
+            t += LeoCr.Yspeed;            
+
             sec += timer1.Interval;
 
             if (sec >= maxTime)
             {
                 sec = 0;
+
                 Oscar osc = OscarCreating();
+
                 oList.Add(osc);
             }
+
             g.DrawImage(ImLeo, 200, 200+t, LeoCr.leoWidth, LeoCr.leoHeight);
+
+            g.DrawString(score.ToString(), LeoFont, Brushes.AntiqueWhite, 200, 0);
 
             if (CollisionCheck())
             {
-                
-                EndOfGame();               
+                gameOver = true;               
 
                 if (LeoCr.Yspeed < 0)
                 {
-
                     LeoCr.Yspeed = -maxLeoSpeed;
                 }
-
             }
-            g.DrawString(score.ToString(), LeoFont, Brushes.AntiqueWhite, 200, 0);
 
             if (gameOver)
             {
                 g.DrawString("YOU LOST", LeoFont, Brushes.Red, 100, 140);
                 g.DrawString("double-click to try again", LostFont, Brushes.Red, 80, 220);
             }
-
-
         }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            g = CreateGraphics();
-        }
-
-        private Oscar OscarCreating()
-        {
-            o.DistanceBetween = 95;
-
-            o.Xlocation = Width;
-            o.Ylocation = -r.Next(50, 200);
-
-            o.TopOscar = new RectangleF(o.Xlocation, 250+o.Ylocation - 2*o.DistanceBetween, OscarWidth, OscarHeight);
-            o.BottomOscar = new RectangleF(o.Xlocation, 250+o.Ylocation + 2*o.DistanceBetween, OscarWidth, OscarHeight);
-
-            return o;
-        }
-
-        Font LeoFont = new Font(new FontFamily("Arial"), 40, FontStyle.Bold);
-        Font LostFont = new Font(new FontFamily("Arial"), 20, FontStyle.Bold);
-
 
         private bool CollisionCheck()
         {
@@ -193,7 +205,7 @@ namespace PlatformerGameProject
                 CheckRectTop.Y += 30;
                 CheckRectTop.X -= 10;
 
-                CheckRectBot.Y += 50;
+                CheckRectBot.Y += 60;
                 CheckRectBot.X -= 10;
 
                 if (LeoCr.LeoSquare.IntersectsWith(CheckRectTop) || LeoCr.LeoSquare.IntersectsWith(CheckRectBot) || LeoCr.LeoSquare.IntersectsWith(UpperCheck) || LeoCr.LeoSquare.IntersectsWith(BottomCheck))
@@ -205,13 +217,6 @@ namespace PlatformerGameProject
             return false;
         }
 
-        private void EndOfGame()
-        {
-            gameOver = true;
-        }
-        
-        private bool gameOver;
-
         private void pictureBox2_Click(object sender, EventArgs e)
         {
             Leos.PlayLooping();
@@ -220,6 +225,7 @@ namespace PlatformerGameProject
 
             pictureBox1.Image = Properties.Resources.bear;
             pictureBox1.Visible = true;
+
             timer1.Start();
            
             pictureBox2.Hide();
@@ -230,26 +236,20 @@ namespace PlatformerGameProject
         {
             Application.Exit();
         }
-
-        private void Form1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (gameOver)
-            {
-                Application.Restart();
-            }
-        }      
+      
     }
 
 
     struct Leo
     {
         public RectangleF LeoSquare;
+
         public float leoWidth;
         public float leoHeight;
+
         public Image LeoFace;
 
         public float Yspeed;
-
     }
 
     struct Oscar
