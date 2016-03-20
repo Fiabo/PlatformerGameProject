@@ -27,7 +27,7 @@ namespace PlatformerGameProject
         Leo LeoCr = new Leo();
         Oscar o = new Oscar();
 
-        float maxLeoSpeed = -13;
+        float maxLeoSpeed = -8;
 
         int sec = 0;
 
@@ -75,8 +75,8 @@ namespace PlatformerGameProject
             LeoCr.LeoFace = ImLeo;
             LeoCr.Yspeed = 0;
 
-            LeoCr.leoWidth = Width/6;
-            LeoCr.leoHeight = Width/6;
+            LeoCr.leoWidth = Width/8;
+            LeoCr.leoHeight = Width/8;
 
             LeoCr.LeoSquare = new RectangleF(Width / 2 - LeoCr.leoWidth, Height / 2, LeoCr.leoWidth, LeoCr.leoHeight);
 
@@ -123,13 +123,8 @@ namespace PlatformerGameProject
         private void timer1_Tick(object sender, EventArgs e)
         {
             UpdateLeo();
-
             t += LeoCr.Yspeed;
-
-            //g.Clear(Color.Snow);
-
             UpdateOscar();
-
             sec += timer1.Interval;
 
             if (sec >= maxTime)
@@ -138,21 +133,20 @@ namespace PlatformerGameProject
                 Oscar osc = OscarCreating();
                 oList.Add(osc);
             }
-            
             g.DrawImage(ImLeo, 200, 200+t, LeoCr.leoWidth, LeoCr.leoHeight);
 
             if (CollisionCheck())
             {
+                
                 EndOfGame();               
 
                 if (LeoCr.Yspeed < 0)
                 {
+
                     LeoCr.Yspeed = -maxLeoSpeed;
                 }
 
             }
-
-            
             g.DrawString(score.ToString(), LeoFont, Brushes.AntiqueWhite, 200, 0);
 
             if (gameOver)
@@ -167,11 +161,6 @@ namespace PlatformerGameProject
         private void Form1_Load(object sender, EventArgs e)
         {
             g = CreateGraphics();
-            
-            //g.Transform = new System.Drawing.Drawing2D.Matrix(1, 0, 0, 1, 200, 250);
-
-            
-
         }
 
         private Oscar OscarCreating()
@@ -193,8 +182,6 @@ namespace PlatformerGameProject
 
         private bool CollisionCheck()
         {
-            
-
             foreach(Oscar osc in oList)
             {
                 RectangleF CheckRectTop = osc.TopOscar;
@@ -207,7 +194,7 @@ namespace PlatformerGameProject
                 CheckRectTop.X -= 10;
 
                 CheckRectBot.Y += 50;
-                CheckRectTop.X -= 10;
+                CheckRectBot.X -= 10;
 
                 if (LeoCr.LeoSquare.IntersectsWith(CheckRectTop) || LeoCr.LeoSquare.IntersectsWith(CheckRectBot) || LeoCr.LeoSquare.IntersectsWith(UpperCheck) || LeoCr.LeoSquare.IntersectsWith(BottomCheck))
                 {
