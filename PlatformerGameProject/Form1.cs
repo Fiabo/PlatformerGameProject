@@ -22,8 +22,6 @@ namespace PlatformerGameProject
 
         List<Oscar> oList = new List<Oscar>();
 
-        //Rectangle LineCheck = new Rectangle(240, 240, 500, 1);
-
         Random r = new Random();
 
         Leo LeoCr = new Leo();
@@ -32,6 +30,8 @@ namespace PlatformerGameProject
         float maxLeoSpeed = -13;
 
         int sec = 0;
+
+        int endsec = 0;
 
         int score = 0;
 
@@ -157,20 +157,10 @@ namespace PlatformerGameProject
 
             if (gameOver)
             {
-
-                g.DrawString("YOU LOST", LeoFont, Brushes.Red, 100, 180);
-                
-                //timer1.Stop();
-                //Thread.Sleep(1500);
-                //score = 0;
-                //pictureBox2.Visible = true;
-                //pictureBox2.Enabled = true;
-                //pictureBox3.Visible = true;
-                //pictureBox3.Enabled = true;
-                //gameOver = false;
-                //pictureBox1.Visible = false;
-                //oList.Clear();
+                g.DrawString("YOU LOST", LeoFont, Brushes.Red, 100, 140);
+                g.DrawString("double-click to try again", LostFont, Brushes.Red, 80, 220);
             }
+
 
         }
 
@@ -197,10 +187,9 @@ namespace PlatformerGameProject
             return o;
         }
 
-        
-
         Font LeoFont = new Font(new FontFamily("Arial"), 40, FontStyle.Bold);
-        Font LostFont = new Font(new FontFamily("Comic Sans MS"), 80, FontStyle.Bold);
+        Font LostFont = new Font(new FontFamily("Arial"), 20, FontStyle.Bold);
+
 
         private bool CollisionCheck()
         {
@@ -255,8 +244,13 @@ namespace PlatformerGameProject
             Application.Exit();
         }
 
-      
-        
+        private void Form1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (gameOver)
+            {
+                Application.Restart();
+            }
+        }      
     }
 
 
