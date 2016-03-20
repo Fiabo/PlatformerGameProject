@@ -27,11 +27,11 @@ namespace PlatformerGameProject
         Leo LeoCr = new Leo();
         Oscar o = new Oscar();
 
-        float maxLeoSpeed = -8;
+        float maxLeoSpeed = -13;
 
         int sec = 0;
 
-        int maxTime = 1500;
+        int maxTime = 1000;
 
         public const float SpeedUp = 0.4f;
 
@@ -101,7 +101,7 @@ namespace PlatformerGameProject
         {
             if (gameOver) return;
 
-            LeoCr.Yspeed -= 10;
+            LeoCr.Yspeed -= 13;
 
             if (LeoCr.Yspeed < maxLeoSpeed)
             {
@@ -131,11 +131,11 @@ namespace PlatformerGameProject
                 oList.Add(osc);
             }
             
-            g.DrawImage(ImLeo, 0, t, LeoCr.leoWidth, LeoCr.leoHeight);
+            g.DrawImage(ImLeo, 200, 200+t, LeoCr.leoWidth, LeoCr.leoHeight);
 
             if (CollisionCheck())
             {
-                EndOfGame();
+                EndOfGame();               
 
                 if (LeoCr.Yspeed < 0)
                 {
@@ -145,7 +145,9 @@ namespace PlatformerGameProject
             }
 
             s = lol.ToString();
-            g.DrawString(s, LeoFont, Brushes.Black, 0, -200);
+            g.DrawString(s, LeoFont, Brushes.Black, 0, 0);
+
+            if (gameOver) g.DrawString("YOU LOST", LeoFont, Brushes.Red, 100, 200);
 
         }
 
@@ -153,7 +155,7 @@ namespace PlatformerGameProject
         {
             g = CreateGraphics();
             
-            g.Transform = new System.Drawing.Drawing2D.Matrix(1, 0, 0, 1, 200, 250);
+            //g.Transform = new System.Drawing.Drawing2D.Matrix(1, 0, 0, 1, 200, 250);
 
             //Leos.PlayLooping();
 
@@ -172,8 +174,8 @@ namespace PlatformerGameProject
             o.Xlocation = Width;
             o.Ylocation = -r.Next(50, 200);
 
-            o.TopOscar = new RectangleF(o.Xlocation, o.Ylocation - 2*o.DistanceBetween, OscarWidth, OscarHeight);
-            o.BottomOscar = new RectangleF(o.Xlocation, o.Ylocation + 2*o.DistanceBetween, OscarWidth, OscarHeight);
+            o.TopOscar = new RectangleF(o.Xlocation, 250+o.Ylocation - 2*o.DistanceBetween, OscarWidth, OscarHeight);
+            o.BottomOscar = new RectangleF(o.Xlocation, 250+o.Ylocation + 2*o.DistanceBetween, OscarWidth, OscarHeight);
 
             return o;
         }
@@ -181,16 +183,25 @@ namespace PlatformerGameProject
         
 
         Font LeoFont = new Font(new FontFamily("Arial"), 40, FontStyle.Bold);
+        Font LostFont = new Font(new FontFamily("Comic Sans MS"), 80, FontStyle.Bold);
 
         private bool CollisionCheck()
         {
+            
+
             foreach(Oscar osc in oList)
             {
-                if (LeoCr.LeoSquare.IntersectsWith(osc.BottomOscar) || LeoCr.LeoSquare.IntersectsWith(osc.TopOscar))
+                RectangleF CheckRectTop = osc.TopOscar;
+                RectangleF CheckRectBot = osc.BottomOscar;
+
+                CheckRectTop.Y += 30;
+                CheckRectBot.Y += 50;
+
+                if (LeoCr.LeoSquare.IntersectsWith(CheckRectTop) || LeoCr.LeoSquare.IntersectsWith(CheckRectBot))
                 {
-                    lol++;
-                    if (lol==200) return true;
+                    return true;
                 }
+               
             }
 
             return false;
