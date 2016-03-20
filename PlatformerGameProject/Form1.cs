@@ -31,6 +31,8 @@ namespace PlatformerGameProject
 
         int sec = 0;
 
+        int score = 0;
+
         int maxTime = 1000;
 
         public const float SpeedUp = 0.4f;
@@ -89,6 +91,13 @@ namespace PlatformerGameProject
                 Oscar osc = oList[i];
                 osc.TopOscar.Location = new PointF(osc.TopOscar.Location.X - 5, osc.TopOscar.Location.Y);
                 osc.BottomOscar.Location = new PointF(osc.BottomOscar.Location.X - 5, osc.BottomOscar.Location.Y);
+
+                if (!osc.Scored && osc.TopOscar.Location.X < LeoCr.LeoSquare.Location.X && !gameOver)
+                {
+                    score++;
+                    osc.Scored = true;
+                }
+
                 oList[i] = osc;
 
                 g.DrawImage(ImOscarBottom, osc.BottomOscar);
@@ -108,9 +117,6 @@ namespace PlatformerGameProject
                 LeoCr.Yspeed = maxLeoSpeed;
             }
         }
-
-        int lol = 0;
-        string s;
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -144,10 +150,10 @@ namespace PlatformerGameProject
 
             }
 
-            s = lol.ToString();
-            g.DrawString(s, LeoFont, Brushes.Black, 0, 0);
+            
+            g.DrawString(score.ToString(), LeoFont, Brushes.Violet, 200, 0);
 
-            if (gameOver) g.DrawString("YOU LOST", LeoFont, Brushes.Red, 100, 200);
+            if (gameOver) g.DrawString("YOU LOST", LeoFont, Brushes.Red, 100, 180);
 
         }
 
@@ -201,6 +207,8 @@ namespace PlatformerGameProject
                 {
                     return true;
                 }
+
+                
                
             }
 
@@ -236,7 +244,10 @@ namespace PlatformerGameProject
 
         public float Xlocation;
         public float Ylocation;
+
         public float DistanceBetween;
+
+        public bool Scored;
     }
     
 }
